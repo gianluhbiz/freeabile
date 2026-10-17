@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "remixicon/fonts/remixicon.css";
+
+@theme {
+  --color-paper: #f3ede2;
+  --color-cream: #fbf7f0;
+  --color-forest: #1e3b2f;
+  --color-night: #13241c;
+  --color-sage: #8c9c7e;
+  --color-crust: #b8682f;
+  --color-apricot: #e9935a;
+  --color-ink: #1a1a17;
+
+  --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Caprasimo", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply bg-paper text-ink font-display;
+  font-optical-sizing: auto;
+}
+
+::selection {
+  @apply bg-apricot text-ink;
+}
+
+/* Zig-zag torn edge for the receipt */
+.receipt-edge {
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 51% repeat-x,
+    conic-gradient(from 135deg at top, #0000, #000 1deg 89deg, #0000 90deg) top / 16px 51% repeat-x;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
