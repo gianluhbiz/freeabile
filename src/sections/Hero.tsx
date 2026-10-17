@@ -40,9 +40,14 @@ export function Hero() {
     my.set(e.clientY / window.innerHeight - 0.5)
   }
 
-  const clip = useTransform(p, [0.28, 0.82], ["inset(46% 44% 46% 44% round 999px)", "inset(0% 0% 0% 0% round 0px)"])
-  const imgScale = useTransform(p, [0.28, 1], [1.5, 1])
-  const imgOpacity = useTransform(p, [0.22, 0.3], [0, 1])
+  // Built by hand every frame: a keyframed clip-path gets handed to the native
+  // scroll timeline, and mobile Safari never interpolates it (the image stayed hidden).
+  const clip = useTransform(p, (v) => {
+    const t = 1 - Math.min(Math.max((v - 0.28) / 0.54, 0), 1)
+    return `inset(${46 * t}% ${44 * t}% ${46 * t}% ${44 * t}% round ${Math.round(t * 400)}px)`
+  })
+  const imgScale = useTransform(p, (v) => 1.5 - 0.5 * Math.min(Math.max((v - 0.28) / 0.72, 0), 1))
+  const imgOpacity = useTransform(p, (v) => Math.min(Math.max((v - 0.22) / 0.08, 0), 1))
   const capOpacity = useTransform(p, [0.8, 0.95], [0, 1])
   const capY = useTransform(p, [0.8, 0.95], [40, 0])
   const introOpacity = useTransform(p, [0, 0.18], [1, 0])
